@@ -32,6 +32,46 @@
 
 # NFT Marketplace
 
+
+# Frontend Developer Assessment — NFT Marketplace
+
+**Author:** Daniil
+
+## Assumptions
+- Backend (NestJS) runs at http://localhost:3002.
+- Gallery endpoint: GET /api/creations/explore returning items shaped like:
+  id, title, image, category?, description?, creator { name, avatar? }.
+- Images are served under /images/ (e.g., http://localhost:3002/images/…).
+- Image extensions are normalized to lowercase (.webp, .png, .jpg). If the API returns WEPB/WEBP or mixed casing, the frontend normalizes the URL and falls back to a placeholder on error.
+- Next.js App Router is used; next/image is configured to allow localhost:3002 sources (images.remotePatterns).
+- Monorepo with pnpm/Turborepo; shared UI in packages/ui; Node.js >= 18, pnpm >= 8.
+- Prisma dev uses SQLite with apps/api/prisma/.env → DATABASE_URL="file:./dev.db".
+- Intercepting Routes modal works on client navigation from /explore; direct visit to /explore/[id] renders the full page (expected).
+- **Case-sensitive imports fix (Linux):** UI imports were normalized from `../NFTCard` to `../NftCard` (e.g., `packages/ui/components/GridNFTCard/index.tsx`) to match actual folder/file names. Added `forceConsistentCasingInFileNames: true` in TS config to prevent future casing errors.
+
+## Features Completed
+- Explore Gallery (/explore)
+  - Responsive (mobile-first) grid with Tailwind CSS.
+  - NFT cards show image, creator name, title, optional category.
+  - Subtle hover effects (scale/translate/shadow).
+- NFT Detail
+  - Full detail page at /explore/[id] (fallback on direct visit).
+  - Modal detail via Next.js Intercepting Routes (@modal) when navigating from /explore.
+  - Accessible close on backdrop click and Esc.
+  - Modal animated with Framer Motion.
+- Loading & UX
+  - Skeleton loading via loading.tsx while fetching gallery data.
+- SEO
+  - Basic metadata (title, description, OpenGraph) on the Explore page.
+- Images
+  - External images from localhost:3002 allowed in Next config.
+  - URL normalization for image extensions + placeholder on error.
+
+# Problems
+
+-Issues that need to be fixed. This is in http://localhost:3002/api/creations/explore . We need to check the API, because the 3rd picture arrives with the wrong WEBP. Therefore, the wrong path arrives there.
+
+
 ## Requirements
 
 - [nodejs](http://nodejs.org/)
